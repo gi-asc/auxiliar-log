@@ -1,7 +1,7 @@
 {
-  "name": "logger-mp",
-  "version": "1.0.3",
-  "description": "",
+  "name": "auxiliar-log",
+  "version": "1.0.4",
+  "description": "pacote criado para auxiliar a geração de logs personalizados no controller e no middleware",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gi-asc/logger-mp.git"
+    "url": "git+https://github.com/gi-asc/auxiliar-log.git"
   },
   "dependencies": {
     "@types/cli-color": "^2.0.2",
@@ -22,9 +22,9 @@
   "author": "“Giovana <“giovanaaraujo3003@gmail.com”>",
   "license": "“MIT”",
   "bugs": {
-    "url": "https://github.com/gi-asc/logger-mp/issues"
+    "url": "https://github.com/gi-asc/auxiliar-log/issues"
   },
-  "homepage": "https://github.com/gi-asc/logger-mp#readme",
+  "homepage": "https://github.com/gi-asc/auxiliar-log#readme",
   "devDependencies": {
     "@types/node": "^18.6.5",
     "ts-node": "^10.9.1",
