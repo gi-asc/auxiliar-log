@@ -1,4 +1,4 @@
-import { Controller } from "./controller"
+import { OptionsController } from "./options"
 
 export interface IDataLogger {
     statusCode?: number
@@ -13,8 +13,5 @@ export interface IDataLogger {
 }
 
 export interface ILogger {
-    formateMiddleLog(data: IDataLogger): string,
-    logging(message: string, success: boolean): void,
-    formateControllerLog(controller: Controller, data: IDataLogger): string,
-    log(data: IDataLogger, controller?: Controller): void
+    log(data: IDataLogger, options?: OptionsController): void
 }
