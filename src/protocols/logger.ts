@@ -1,4 +1,4 @@
-import { OptionsController } from "./options"
+import { HttpClient, OptionsController } from "./options"
 
 export interface IDataLogger {
     statusCode?: number
@@ -14,4 +14,5 @@ export interface IDataLogger {
 
 export interface ILogger {
     log(data: IDataLogger, options?: OptionsController): void
+    logHttpClient(httpClient: HttpClient, data: IDataLogger): void
 }

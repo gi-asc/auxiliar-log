@@ -1,7 +1,7 @@
 import { IDataLogger, ILogger } from "../protocols/logger";
 import logger from  '../config/index'
 import clc from 'cli-color'
-import { OptionsController } from "../protocols/options";
+import { HttpClient, OptionsController } from "../protocols/options";
 
 export class Logger implements ILogger{
 
@@ -46,6 +46,23 @@ export class Logger implements ILogger{
         return `Requisição do tipo ${type} realizada na data de ${date}, tem como objetivo ${objetive}. Foram enviados os seguintes dados: ${params}, que ${returns}`
     }
 
+    formateHttpRequestLog(httpClient: HttpClient, data: IDataLogger): string {
+        const url = clc.magenta.bold(httpClient.url)
+        const date = clc.white.bold(this.formateDate(data.date))
+        const params = clc.yellowBright.bold(httpClient.params ? JSON.stringify(httpClient.params) : "Não foram enviados paramêtros")
+        const body = clc.blue.bold(httpClient.body ? JSON.stringify(httpClient.body) : "Não foram enviados dados no corpo")
+        const headers = clc.green.bold(httpClient.headers ? JSON.stringify(httpClient.headers) : "Não foram enviados cabeçalhos")
+        const response = clc.white.bold(JSON.stringify(data.response))
+        const success = `O serviço enviou a seguinte resposta: ${response}`
+        const errors = `O seviço retornou o seguinte erro: ${clc.white("ERROR CODE:")} ${clc.red.bold(data.statusCode)}, ${clc.white("ERROR MESSAGE:")} ${clc.red.bold(JSON.stringify(data.response))}`
+        return `requisição para a URL ${url} com os seguintes dados:\nPARAMS: ${params}\nBODY: ${body}\nHEADERS: ${headers} na data de ${date}.${data.success ? success : errors}`
+    }
+
+    logHttpClient(httpClient: HttpClient, data: IDataLogger): void {
+        const message = this.formateHttpRequestLog(httpClient, data)
+        this.logging(message, data.success)
+    }
+    
     log(data: IDataLogger, options?: OptionsController): void {
         let message: string
         if (options) {

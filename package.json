@@ -1,6 +1,6 @@
 {
   "name": "auxiliar-log",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "pacote criado para auxiliar a geração de logs personalizados no controller e no middleware",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
