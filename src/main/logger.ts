@@ -83,7 +83,7 @@ export class Logger implements ILogger{
 
     private formateLogAxiosRequest (url: string,token = '', params?: any, headers?: any, response?: any, functionName?: string, data?: any): string {
         const nameFunc = functionName ? clc.bold.green(`[${functionName}]`) : clc.bold.green('[functionNameNotProvided]')
-        let  log = `${nameFunc} ${clc.bold.green(`URL:::`)} ${clc.white(url)}`
+        let  log = `${nameFunc} ${clc.cyan(`URL:::`)} ${clc.white(url)}`
         token ? log = log + (`\n${nameFunc} ${clc.cyan(`TOKEN:::`)} ${clc.white(token)}`): log = log + (`\n${nameFunc} ${clc.green(`TOKEN:::`)} token is not provided`)
         data ? Object.keys(data).forEach((key) => {
           if(typeof data[key] == 'object') {
@@ -91,7 +91,7 @@ export class Logger implements ILogger{
             } else {
               log = log + (`\n${nameFunc} ${clc.cyan(`DATA(${key}):::`)} ${clc.white(data[key])}`)
             }
-        }) : log = log + (`\n${nameFunc} ${clc.green(`DATA:::`)} data is not provided`)
+        }) : log = log + (`\n${nameFunc} ${clc.cyan(`DATA:::`)} data is not provided`)
         params ? Object.keys(params).forEach((key) => {
           log = log + (`\n${nameFunc} ${clc.cyan(`PARAMS(${key}):::`)} ${clc.white(params[key])}`)
         }) : log = log + (`\n${nameFunc} ${clc.cyan(`PARAMS:::`)} params is not provided`)
