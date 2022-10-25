@@ -126,8 +126,12 @@ export class Logger implements ILogger{
           log = log + (`\n${nameFunc} ${clc.magentaBright(`HEADERS(${key}):::`)} ${clc.white(headers[key])}`)
         }) : log = log + (`\n${nameFunc} ${clc.magentaBright(`HEADERS:::`)} headers is not provided`)
         error ? Object.keys(error).forEach((key) => {
-          log = log + (`\n${nameFunc} ${clc.magentaBright(`ERROR(${key}):::`)} ${clc.white(error[key])}`)
-        }): log = log + (`\n${nameFunc} ${clc.magentaBright(`ERROR:::`)} error is not provided`)
+            if(typeof error[key] == 'object') {
+                log = log + (`\n${nameFunc} ${clc.magentaBright(`ERROR(${key}):::`)} ${clc.white(JSON.stringify(error[key]))}`)
+                } else {
+                  log = log + (`\n${nameFunc} ${clc.magentaBright(`ERROR(${key}):::`)} ${clc.white(error[key])}`)
+                }
+              }) : log = log + clc.magentaBright(`\n${nameFunc} ${clc.magenta(`ERROR:::`)} error is not provided`)
         return log
       }
 }
