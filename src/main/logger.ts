@@ -72,4 +72,62 @@ export class Logger implements ILogger{
         }
         this.logging(message, data.success)
     }
+
+    logAxiosRequest (url: string,token = '', params?: any, headers?: any, response?: any, functionName?: string, data?: any): void {
+        this.logging(this.formateLogAxiosRequest(url, token, params, headers, response, functionName, data), true)
+    }
+    logAxiosRequestError (url: string,token = '', params?: any, headers?: any, response?: any, functionName?: string, error?: any): void {
+        this.logging(this.formateAxiosRequestError(url, token, params, headers, response, functionName, error), false)
+    }
+
+
+    private formateLogAxiosRequest (url: string,token = '', params?: any, headers?: any, response?: any, functionName?: string, data?: any): string {
+        const nameFunc = functionName ? clc.bold.green(`[${functionName}]`) : clc.bold.green('[functionNameNotProvided]')
+        let  log = `${nameFunc} ${clc.bold.green(`URL:::`)} ${url}`
+        token ? log = log + (`\n${nameFunc} ${clc.cyan(`TOKEN:::`)} ${token}`): log = log + ('\n token is not provided')
+        data ? Object.keys(data).forEach((key) => {
+          if(typeof data[key] == 'object') {
+            log = log + (`\n${nameFunc} ${clc.cyan(`DATA(${key}):::`)} ${JSON.stringify(data[key])}`)
+            } else {
+              log = log + (`\n${nameFunc} ${clc.cyan(`DATA(${key}):::`)} ${data[key]}`)
+            }
+        }) : log = log + clc.yellowBright('\n data is not provided')
+        params ? Object.keys(params).forEach((key) => {
+          log = log + (`\n${nameFunc} ${clc.cyan(`PARAMS(${key}):::`)} ${params[key]}`)
+        }) : log = log + clc.yellowBright('\n params is not provided')
+        headers ? Object.keys(headers).forEach((key) => {
+          log = log + (`\n${nameFunc} ${clc.cyan(`HEADERS(${key}):::`)} ${headers[key]}`)
+        }) : log = log + clc.yellowBright('\n headers is not provided')
+        response ? Object.keys(response).forEach((key) => {
+          if(typeof response[key] == 'object') {
+          log = log + (`\n${nameFunc} ${clc.cyan(`RESPONSE(${key}):::`)} ${JSON.stringify(response[key])}`)
+          } else {
+            log = log + (`\n${nameFunc} ${clc.cyan(`RESPONSE(${key}):::`)} ${response[key]}`)
+          }
+        }) : log = log + clc.yellowBright('\n response is not provided')
+        return log
+      }
+    
+      private formateAxiosRequestError(url: string,token = '', params?: any, headers?: any, error?: any, functionName?: string, data?: any): string {
+        const nameFunc = functionName ? clc.bold.red(`[${functionName}]`) : clc.bold.red('[functionNameNotProvided]')
+        let  log = `${nameFunc} ${clc.bold.magenta(`URL:::`)} ${url}`
+        token ? log = log + (`\n${nameFunc} ${clc.magenta(`TOKEN:::`)} ${token}`): log = log + ('\n token is not provided')
+        data ? Object.keys(data).forEach((key) => {
+          if(typeof data[key] == 'object') {
+            log = log + (`\n${nameFunc} ${clc.magenta(`DATA(${key}):::`)} ${JSON.stringify(data[key])}`)
+            } else {
+              log = log + (`\n${nameFunc} ${clc.magenta(`DATA(${key}):::`)} ${data[key]}`)
+            }
+        }) : log = log + clc.magentaBright('\n data is not provided')
+        params ? Object.keys(params).forEach((key) => {
+          log = log + (`\n${nameFunc} ${clc.magenta(`PARAMS(${key}):::`)} ${params[key]}`)
+        }) : log = log + clc.magentaBright('\n params is not provided')
+        headers ? Object.keys(headers).forEach((key) => {
+          log = log + (`\n${nameFunc} ${clc.magenta(`HEADERS(${key}):::`)} ${headers[key]}`)
+        }) : log = log + clc.magentaBright('\n headers is not provided')
+        error ? Object.keys(error).forEach((key) => {
+          log = log + (`\n${nameFunc} ${clc.magenta(`ERROR(${key}):::`)} ${error[key]}`)
+        }): log = log + clc.magenta('\n error is not provided')
+        return log
+      }
 }

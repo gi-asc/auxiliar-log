@@ -15,4 +15,6 @@ export interface IDataLogger {
 export interface ILogger {
     log(data: IDataLogger, options?: OptionsController): void
     logHttpClient(httpClient: HttpClient, data: IDataLogger): void
+    logAxiosRequest (url: string, token: string, params?: any, headers?: any, response?: any, functionName?: string, data?: any): void
+    logAxiosRequestError (url: string,token: string, params?: any, headers?: any, response?: any, functionName?: string, error?: any): void
 }
